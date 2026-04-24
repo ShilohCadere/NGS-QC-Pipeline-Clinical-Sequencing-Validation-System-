@@ -1,8 +1,6 @@
 # NGS QC Pipeline
 
-A modular quality control pipeline for evaluating next-generation sequencing (NGS) data in a clinical-style workflow.
-
-This project simulates the QC stage of a bioinformatics pipeline, where sequencing outputs are validated, filtered, and summarized prior to downstream genomic analysis.
+QC validation module for clinical NGS pipelines performing sequencing quality assessment, threshold-based filtering, and PASS/FLAG/FAIL classification of genomic data.
 
 ## System Context
 This pipeline is part of a broader clinical bioinformatics data system:
