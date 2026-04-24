@@ -15,15 +15,16 @@ Together, these components simulate an end-to-end NGS data handling workflow.
 ```
 FASTA Sequence Input
         ↓
-Nucleotide Parsing
+Sequence Parsing & Validation
         ↓
 QC Metric Calculation (GC %, AT %, N content, length)
         ↓
-Threshold-Based Quality Assessment
+Clinical Threshold Evaluation (SOP-defined rules)
         ↓
-PASS / FLAG / FAIL Classification
+Sequencing Quality Classification
+(PASS / FLAG / FAIL)
         ↓
-QC Summary Report
+QC Summary Report for Review
 ```
 
 ## QC Metrics
