@@ -1,47 +1,37 @@
 # NGS QC Pipeline
 
-QC validation module for clinical NGS pipelines performing sequencing quality assessment, threshold-based filtering, and PASS/FLAG/FAIL classification of genomic data.
+QC module for clinical-style NGS workflows that performs sequencing quality assessment, threshold-based filtering, and PASS/FLAG/FAIL classification of nucleotide data.
 
 ## System Context
-This pipeline is part of a broader clinical bioinformatics data system:
+This module is part of an integrated clinical bioinformatics system:
 
-- Sample tracking and metadata management (LIMS database)
-- Sequence processing utilities (genomic-toolkit)
-- QC validation and filtering (this pipeline)
+- **LIMS Database** → sample tracking and metadata management
+- **Genomic Toolkit** → sequence processing utilities
+- **NGS QC Pipeline** (this module) → sequencing quality evaluation and validation
 
-Together, these components simulate an end-to-end NGS data handling workflow.
+Together, these components represent an end-to-end NGS data processing workflow from sample tracking to QC decisioning.
 
-## QC Workflow
+## Pipeline Overview
 ```
-FASTA Sequence Input
-        ↓
-Sequence Parsing & Validation
-        ↓
-QC Metric Calculation (GC %, AT %, N content, length)
-        ↓
-Clinical Threshold Evaluation (SOP-defined rules)
-        ↓
-Sequencing Quality Classification
-(PASS / FLAG / FAIL)
-        ↓
-QC Summary Report for Review
+FASTA Input
+→ Sequence Parsing
+→ QC Metric Calculation
+→ Threshold Evaluation (clinical rules)
+→ Quality Classification
+→ QC Summary Output
 ```
-
 ## QC Metrics
-- GC content distribution
-- AT content balance
+- GC content (%)
+- AT content (%)
 - N-base frequency (ambiguous bases)
 - Sequence length validation
-- Quality flag assignment
 
+## Quality Classification Logic
+- PASS → meets all QC thresholds
+- FLAG → borderline metrics; review recommended
+- FAIL → QC failure (e.g., high N content, invalid length)
 
-## QC Decision Logic
-
-Samples are evaluated using simple threshold-based rules:
-
-- GC content outside expected range → FLAG
-- High N content (> threshold) → FAIL
-- Sequence length below minimum → FLAG
+Rules are based on simplified clinical-style QC thresholds.
 
 ## How to Run
 ```
@@ -50,7 +40,7 @@ python src/cli.py --file data/sequence.fasta --at
 python src/cli.py --file data/sequence.fasta --composition
 ```
 
-## Output Example
+## Example Output
 ```
 Sample QC Report
 -----------------
@@ -60,36 +50,26 @@ N Content: 0%
 Status: PASS
 ```
 
-## Input/Output Behavior
-**Input:**
-- FASTA file containing one or more nucleotide sequences
-- Assumes standard nucleotide alphabet (A, T, C, G, N)
+## Input Requirements
+- FASTA format input (single or multi-sequence)
+- Standard nucleotide alphabet (A, T, C, G, N)
 
-**Pipeline outputs:**
-- QC metrics per sequence
-- PASS / FLAG / FAIL status, where:
-    - PASS → meets all QC thresholds
-    - FLAG → review recommended
-    - FAIL → sequencing failure likely
-- Optional saved results file (CSV or TXT)
+## Output
+- Per-sequence QC metrics
+- PASS / FLAG / FAIL classification
+- Optional file export (CSV/TXT depending on CLI flags)
 
-## Design Philosophy
-This project prioritizes:
+## Design Focus
+- Deterministic QC logic
+- Reproducible evaluation rules
+- Modular pipeline design
+- Clinical-style sequencing validation structure
 
-- Reproducible QC logic
-- Transparent threshold-based evaluation
-- Modular pipeline structure
-- Clinical-style data validation workflows
+## Role in System
 
-## Use Case
-
-This pipeline simulates a simplified clinical QC step used in:
-- NGS sequencing validation workflows
-- Pre-analysis sample screening
-- Data quality filtering prior to variant analysis
-
-It models early-stage QC checks commonly performed before downstream bioinformatics analysis.
+This module functions as the quality control layer within a broader NGS data system, enabling standardized evaluation of sequencing outputs prior to downstream analysis.
 
 ## Author
+
 ### Shiloh Cadere
-### Bioinformatics Analyst | Clinical NGS Pipelines | Python / R / SQL
+### Bioinformatics Analyst | Clinical NGS Pipelines | Python / SQL / R
