@@ -1,0 +1,4 @@
+Total sequences: 3
+Passed QC: 2
+Failed QC: 1
+Average GC content: 34.98%
