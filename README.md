@@ -1,49 +1,89 @@
 # NGS QC Pipeline
 
-QC module for clinical-style NGS workflows that performs sequencing quality assessment, threshold-based filtering, and PASS/FLAG/FAIL classification of nucleotide data.
+## Recruiter Summary
 
-## System Context
-This module is part of an integrated clinical bioinformatics system:
+A rule-based sequencing QC workflow that evaluates nucleotide sequence data using predefined quality thresholds and classifies results as PASS, FLAG, or FAIL.
 
-- **LIMS Database** → sample tracking and metadata management
-- **Genomic Toolkit** → sequence processing utilities
-- **NGS QC Pipeline** (this module) → sequencing quality evaluation and validation
+This project demonstrates implementation of QC evaluation logic commonly used in sequencing workflows, including sequence composition analysis, threshold-based validation, and standardized quality classification.
 
-Together, these components represent an end-to-end NGS data processing workflow from sample tracking to QC decisioning.
+## What This Project Demonstrates
 
-## Pipeline Overview
-```
+* Sequence quality evaluation using deterministic QC rules
+* GC content and AT content analysis
+* Detection of ambiguous nucleotide content (N bases)
+* Sequence length validation
+* Threshold-based QC decision logic
+* PASS / FLAG / FAIL classification workflows
+* Modular Python implementation for sequence validation
+
+## Workflow Overview
+
+```text
 FASTA Input
-→ Sequence Parsing
-→ QC Metric Calculation
-→ Threshold Evaluation (clinical rules)
-→ Quality Classification
-→ QC Summary Output
+     │
+     ▼
+Sequence Parsing
+     │
+     ▼
+QC Metric Calculation
+     │
+     ▼
+Threshold Evaluation
+     │
+     ▼
+Quality Classification
+     │
+     ▼
+QC Summary Output
 ```
+
 ## QC Metrics
-- GC content (%)
-- AT content (%)
-- N-base frequency (ambiguous bases)
-- Sequence length validation
 
-## Quality Classification Logic
-- PASS → meets all QC thresholds
-- FLAG → borderline metrics; review recommended
-- FAIL → QC failure (e.g., high N content, invalid length)
+The workflow evaluates:
 
-Rules are based on simplified clinical-style QC thresholds.
+* GC content (%)
+* AT content (%)
+* N-base frequency
+* Sequence length
 
-## How to Run
-```
-python src/cli.py --file data/sequence.fasta --gc
-python src/cli.py --file data/sequence.fasta --at
-python src/cli.py --file data/sequence.fasta --composition
+## Quality Classification
+
+### PASS
+
+Sequence meets all defined QC thresholds.
+
+### FLAG
+
+Sequence falls within borderline thresholds and may require review.
+
+### FAIL
+
+Sequence exceeds failure thresholds such as excessive ambiguous bases or invalid sequence length.
+
+## Project Structure
+
+```text
+ngs-qc-pipeline/
+├── data/
+│   └── sample.fasta
+│
+├── outputs/
+│   └── report.txt
+│
+├── src/
+│   ├── filter.py
+│   ├── main.py
+│   ├── parser.py
+│   └── qc.py
+│
+├── README.md
 ```
 
 ## Example Output
-```
+
+```text
 Sample QC Report
------------------
+----------------
 GC Content: 48.2%
 AT Content: 51.8%
 N Content: 0%
@@ -51,25 +91,39 @@ Status: PASS
 ```
 
 ## Input Requirements
-- FASTA format input (single or multi-sequence)
-- Standard nucleotide alphabet (A, T, C, G, N)
 
-## Output
-- Per-sequence QC metrics
-- PASS / FLAG / FAIL classification
-- Optional file export (CSV/TXT depending on CLI flags)
+* FASTA-formatted sequence data
+* Standard nucleotide alphabet (A, T, G, C, N)
 
-## Design Focus
-- Deterministic QC logic
-- Reproducible evaluation rules
-- Modular pipeline design
-- Clinical-style sequencing validation structure
+## Outputs
 
-## Role in System
+* Per-sequence QC metrics
+* PASS / FLAG / FAIL classification
+* Text-based QC reports
 
-This module functions as the quality control layer within a broader NGS data system, enabling standardized evaluation of sequencing outputs prior to downstream analysis.
+## Technology Stack
+
+**Python** • **FASTA Processing** • **QC Validation Logic** • **Command-Line Workflows**
+
+## Design Goals
+
+This project focuses on:
+
+* Deterministic QC evaluation
+* Reproducible validation rules
+* Standardized quality classification
+* Modular sequence-processing architecture
+* Transparent QC decision logic
+
+## Future Enhancements
+
+* Multi-FASTA support
+* Additional QC metrics
+* Configurable threshold definitions
+* Expanded report generation
+* Unit test coverage
 
 ## Author
 
-### Shiloh Cadere
-### Bioinformatics Analyst | Clinical NGS Pipelines | Python / SQL / R
+**Shiloh Cadere**
+Bioinformatics Analyst specializing in genomics QC, data validation, workflow development, and laboratory data systems.
